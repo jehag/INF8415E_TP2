@@ -55,6 +55,28 @@ export SPARK_HOME=/opt/spark
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 export PYSPARK_PYTHON=/usr/bin/python3
 
+### copy pyspark_wordcount.py ###
+echo 'import sys
+ 
+from pyspark import SparkContext, SparkConf
+ 
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        # create Spark context with necessary configuration
+        sc = SparkContext("local","PySpark Word Count Exmaple")
+
+        # read data from text file and split each line into words
+        words = sc.textFile(sys.argv[1]).flatMap(lambda line: line.split(" "))
+
+        # count the occurrence of each word
+        wordCounts = words.map(lambda word: (word, 1)).reduceByKey(lambda a,b:a +b)
+
+        # save the counts to output
+        wordCounts.saveAsTextFile(sys.argv[2])
+    else:
+        print("Usage: {} <input> <output>".format(sys.argv[0]), file=sys.stderr)' > pyspark_wordcount.py
+### end of copy ###
+
 time spark-submit pyspark_wordcount.py input output
 hdfs dfs -rm -r output/
 
