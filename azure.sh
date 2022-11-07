@@ -92,6 +92,18 @@ hdfs dfs -rm -r output/
 # user    0m15.189s
 # sys     0m0.635s
 
+### copy pyspark_wordcount.py ###
+echo 'https://tinyurl.com/4vxdw3pa
+https://tinyurl.com/kh9excea
+https://tinyurl.com/dybs9bnk
+https://tinyurl.com/datumz6m
+https://tinyurl.com/j4j4xdw6
+https://tinyurl.com/ym8s5fm4
+https://tinyurl.com/2h6a75nk
+https://tinyurl.com/vwvram8
+https://tinyurl.com/weh83uyn' > urls.txt
+### end of copy ###
+
 hdfs dfs -mkdir all_input
 wget -P all_input -i urls.txt
 
