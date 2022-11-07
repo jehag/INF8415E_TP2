@@ -46,3 +46,10 @@ time cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
 # real    0m0.674s
 # user    0m0.366s
 # sys     0m0.301s
+
+wget https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz
+tar -xvzf spark-3.3.1-bin-hadoop3.tgz
+sudo mv spark-3.3.1-bin-hadoop3 /opt/spark
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+export PYSPARK_PYTHON=/usr/bin/python3
