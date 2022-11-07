@@ -13,7 +13,8 @@ export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:/usr/local/hadoop/sbin:/usr/local/hadoop/bin
 
 hdfs dfs -mkdir input
-wget --header="Accept-encoding: *" https://www.gutenberg.org/cache/epub/4300/pg4300.txt
+wget --header="Accept-encoding: *" -O pg4300.txt.gz https://www.gutenberg.org/cache/epub/4300/pg4300.txt
+gzip -d pg4300.txt.gz
 hdfs dfs -copyFromLocal pg4300.txt input
 
 hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount input output 
