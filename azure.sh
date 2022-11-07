@@ -123,6 +123,7 @@ hdfs dfs -rm -r all_output/
 # sys     0m0.367s
 
 time spark-submit pyspark_wordcount.py all_input all_output
+hdfs dfs -rm -r all_output/
 
 # real    0m10.848s
 # user    0m18.058s
