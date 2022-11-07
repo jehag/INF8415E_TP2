@@ -49,6 +49,7 @@ time cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
 
 wget https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz
 tar -xvzf spark-3.3.1-bin-hadoop3.tgz
+rm spark-3.3.1-bin-hadoop3.tgz
 sudo mv spark-3.3.1-bin-hadoop3 /opt/spark
 export SPARK_HOME=/opt/spark
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
