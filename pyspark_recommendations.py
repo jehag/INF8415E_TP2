@@ -32,7 +32,9 @@ if __name__ == "__main__":
 
         connections = friends.flatMap(lambda friendsList: expandFriends(friendsList)).reduceByKey(lambda a, b: a + b)
 
-        connections.saveAsTextFile(sys.argv[2])
+        mutuals = connections.map(lambda connection: (connection[0][0], (connection[0][1], len(connection[1][1])))).reduceByKey(lambda a, b: a + b)
+
+        mutuals.saveAsTextFile(sys.argv[2])
 
     else:
         print("Usage: {} <input> <output>".format(sys.argv[0]), file=sys.stderr)
