@@ -17,9 +17,10 @@ def parseFriendsList(line):
 def expandFriends(friendsList):
     thePerson = friendsList[0]
     allFriends = friendsList[1]
+    identity = [((thePerson, thePerson), 0)]
     directFriends = [((thePerson, friend), 0) for friend in allFriends]
     mutualFriends = [((friendA, friendB), 1) for i, friendA in enumerate(allFriends) for friendB in allFriends[i + 1:]]
-    return directFriends + mutualFriends
+    return identity + directFriends + mutualFriends
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
