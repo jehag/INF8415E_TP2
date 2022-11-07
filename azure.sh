@@ -88,5 +88,7 @@ hdfs dfs -rm -r all_output/
 # user    0m9.105s
 # sys     0m0.367s
 
+spark-submit pyspark_wordcount.py all_input all_output
+
 ### copy dataset for social network problem ###
 # scp -i C://Users//gh0st//Documents//8415//vm1_key.pem -r C://Users//gh0st//Documents//8415//TP2//soc-LiveJournal1Adj.txt azureuser@20.55.2.103:~
