@@ -22,6 +22,12 @@ def expandFriends(friendsList):
     mutualFriends = [((friendA, friendB), [1]) for i, friendA in enumerate(allFriends) for friendB in allFriends[i + 1:]]
     return identity + directFriends + mutualFriends
 
+def filterMutualFriends(connection):
+    friendA = connection[0][0]
+    friendB = connection[0][1]
+    proximity = connection[1]
+    return (friendA, [(friendB, len(proximity))])
+
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         # create Spark context with necessary configuration
@@ -32,7 +38,7 @@ if __name__ == "__main__":
 
         connections = friends.flatMap(lambda friendsList: expandFriends(friendsList)).reduceByKey(lambda a, b: a + b)
 
-        mutuals = connections.map(lambda connection: (connection[0][0], (connection[0][1], len(connection[1][1])))).reduceByKey(lambda a, b: a + b)
+        mutuals = connections.map(lambda connection: filterMutualFriends(connection)).reduceByKey(lambda a, b: a + b)
 
         mutuals.saveAsTextFile(sys.argv[2])
 
