@@ -22,7 +22,9 @@ if __name__ == "__main__":
         # read data from text file and split each line into a list
         friends = sc.textFile(sys.argv[1]).map(lambda line: parseFriendsList(line))  
 
-        friends.saveAsTextFile(sys.argv[2])
+        connections = friends.flatMap(lambda friendsList: [((friendA, friendB), 1) for i, friendA in enumerate(friendsList[1]) for friendB in friendsList[1][i + 1:]]).reduceByKey(lambda a, b: a + b)
+
+        connections.saveAsTextFile(sys.argv[2])
 
     else:
         print("Usage: {} <input> <output>".format(sys.argv[0]), file=sys.stderr)
