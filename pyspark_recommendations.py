@@ -10,6 +10,8 @@ if __name__ == "__main__":
         # read data from text file and split each line into a list
         friends = sc.textFile(sys.argv[1]).map(lambda line: line.split("\t"))
   
+        friends = friends.map(lambda friend: friend[1].split(","))
+
         friends.saveAsTextFile(sys.argv[2])
 
     else:
