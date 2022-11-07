@@ -139,3 +139,5 @@ hdfs dfs -rm -r all_output/
 
 ### copy dataset for social network problem ###
 # scp -i C://Users//gh0st//Documents//8415//vm1_key.pem -r C://Users//gh0st//Documents//8415//TP2//soc-LiveJournal1Adj.txt azureuser@20.55.2.103:~
+
+time spark-submit pyspark_recommendations.py recommendations_input recommendations_output
