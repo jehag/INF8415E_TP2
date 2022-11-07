@@ -2,15 +2,25 @@ import sys
  
 from pyspark import SparkContext
 
+def parseFriendsList(line):
+    friendList = line.split("\t")
+    friendList[0] = int(friendList[0])
+    if len(friendList) == 1:
+        friendList.append([])
+    elif friendList[1] == "":
+        friendList[1] = []
+    else:
+        friendList[1] = [int(x) for x in friendList[1].split(",")]
+        
+    return friendList
+
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         # create Spark context with necessary configuration
         sc = SparkContext("local","PySpark Social Network Problem")
 
         # read data from text file and split each line into a list
-        friends = sc.textFile(sys.argv[1]).map(lambda line: line.split("\t"))
-  
-        friends = friends.map(lambda friend: friend[1].split(","))
+        friends = sc.textFile(sys.argv[1]).map(lambda line: parseFriendsList(line))  
 
         friends.saveAsTextFile(sys.argv[2])
 
