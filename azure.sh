@@ -20,3 +20,15 @@ rm pg4300.txt
 
 time hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount input output 
 hdfs dfs -rm -r output/
+
+# real    0m4.291s
+# user    0m7.756s
+# sys     0m0.390s
+
+# real    0m5.442s
+# user    0m8.571s
+# sys     0m0.281s
+
+# real    0m5.422s
+# user    0m8.474s
+# sys     0m0.286s
