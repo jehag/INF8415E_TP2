@@ -74,6 +74,7 @@ hdfs dfs -mkdir all_input
 wget -P all_input -i urls.txt
 
 time hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount all_input all_output
+hdfs dfs -rm -r all_output/
 
 # real    0m5.278s
 # user    0m8.672s
