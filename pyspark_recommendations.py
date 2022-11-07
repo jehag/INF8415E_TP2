@@ -26,7 +26,11 @@ def filterMutualFriends(connection):
     friendA = connection[0][0]
     friendB = connection[0][1]
     proximity = connection[1]
-    return [(friendA, [(friendB, len(proximity))]), (friendB, [(friendA, len(proximity))])]
+    
+    if 0 in proximity:
+        return [(friendA, []), (friendB, [])]
+    else:
+        return [(friendA, [(friendB, len(proximity))]), (friendB, [(friendA, len(proximity))])]
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
