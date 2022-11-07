@@ -33,4 +33,4 @@ hdfs dfs -rm -r output/
 # user    0m8.474s
 # sys     0m0.286s
 
-cat 4300.txt | tr ’␣’ ’␣[ret]␣’ | sort | uniq -c [ret]
+cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
