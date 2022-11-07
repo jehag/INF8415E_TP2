@@ -70,4 +70,5 @@ hdfs dfs -rm -r output/
 # user    0m15.189s
 # sys     0m0.635s
 
+hdfs dfs -mkdir all_input
 wget -P all_input -i urls.txt
