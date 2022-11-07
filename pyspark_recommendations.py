@@ -54,7 +54,9 @@ if __name__ == "__main__":
 
         recommendations = mutuals.map(lambda mutualFriends: recommendFriends(mutualFriends))
 
-        mutuals.saveAsTextFile(sys.argv[2])
+        formattedRecommendations = recommendations.map(lambda recommendation: "{}\t{}".format(recommendation[0], ",".join([str(a) for a in recommendation[1]])))
+
+        formattedRecommendations.saveAsTextFile(sys.argv[2])
 
     else:
         print("Usage: {} <input> <output>".format(sys.argv[0]), file=sys.stderr)
