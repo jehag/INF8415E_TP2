@@ -32,6 +32,14 @@ def filterMutualFriends(connection):
     else:
         return [(friendA, [(friendB, len(proximity))]), (friendB, [(friendA, len(proximity))])]
 
+def recommendFriends(mutualFriends):
+    thePerson = mutualFriends[0]
+    recommendations = mutualFriends[1]
+
+    recommendations.sort(key=lambda recommendation: (-recommendation[1], recommendation[0]))
+
+    return (thePerson, [recommendation[0] for recommendation in recommendations[0:10]])
+
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         # create Spark context with necessary configuration
@@ -43,6 +51,8 @@ if __name__ == "__main__":
         connections = friends.flatMap(lambda friendsList: expandFriends(friendsList)).reduceByKey(lambda a, b: a + b)
 
         mutuals = connections.flatMap(lambda connection: filterMutualFriends(connection)).reduceByKey(lambda a, b: a + b)
+
+        recommendations = mutuals.map(lambda mutualFriends: recommendFriends(mutualFriends))
 
         mutuals.saveAsTextFile(sys.argv[2])
 
