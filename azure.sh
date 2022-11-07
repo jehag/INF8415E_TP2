@@ -55,4 +55,16 @@ export SPARK_HOME=/opt/spark
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 export PYSPARK_PYTHON=/usr/bin/python3
 
-spark-submit pyspark_wordcount.py input output
+time spark-submit pyspark_wordcount.py input output
+
+# real    0m8.961s
+# user    0m14.795s
+# sys     0m0.647s
+
+# real    0m8.963s
+# user    0m14.787s
+# sys     0m0.639s
+
+# real    0m9.152s
+# user    0m15.189s
+# sys     0m0.635s
