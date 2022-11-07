@@ -26,7 +26,7 @@ def filterMutualFriends(connection):
     friendA = connection[0][0]
     friendB = connection[0][1]
     proximity = connection[1]
-    return (friendA, [(friendB, len(proximity))])
+    return [(friendA, [(friendB, len(proximity))]), (friendB, [(friendA, len(proximity))])]
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
         connections = friends.flatMap(lambda friendsList: expandFriends(friendsList)).reduceByKey(lambda a, b: a + b)
 
-        mutuals = connections.map(lambda connection: filterMutualFriends(connection)).reduceByKey(lambda a, b: a + b)
+        mutuals = connections.flatMap(lambda connection: filterMutualFriends(connection)).reduceByKey(lambda a, b: a + b)
 
         mutuals.saveAsTextFile(sys.argv[2])
 
