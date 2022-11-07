@@ -69,3 +69,5 @@ hdfs dfs -rm -r output/
 # real    0m9.152s
 # user    0m15.189s
 # sys     0m0.635s
+
+wget -P all_input -i urls.txt
