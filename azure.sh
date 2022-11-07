@@ -56,6 +56,7 @@ export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 export PYSPARK_PYTHON=/usr/bin/python3
 
 time spark-submit pyspark_wordcount.py input output
+hdfs dfs -rm -r output/
 
 # real    0m8.961s
 # user    0m14.795s
