@@ -18,8 +18,8 @@ def expandFriends(friendsList):
     thePerson = friendsList[0]
     allFriends = friendsList[1]
     identity = [((thePerson, thePerson), [0])]
-    directFriends = [((thePerson, friend), [0]) for friend in allFriends]
-    mutualFriends = [((friendA, friendB), [1]) for i, friendA in enumerate(allFriends) for friendB in allFriends[i + 1:]]
+    directFriends = [((min(thePerson, friend), max(thePerson, friend)), [0]) for friend in allFriends]
+    mutualFriends = [((min(friendA, friendB), max(friendA, friendB)), [1]) for i, friendA in enumerate(allFriends) for friendB in allFriends[i + 1:]]
     return identity + directFriends + mutualFriends
 
 def filterMutualFriends(connection):
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         sc = SparkContext("local","PySpark Social Network Problem")
 
         # read data from text file and split each line into a list
-        friends = sc.textFile(sys.argv[1]).map(lambda line: parseFriendsList(line))  
+        friends = sc.textFile(sys.argv[1]).map(lambda line: parseFriendsList(line))
 
         connections = friends.flatMap(lambda friendsList: expandFriends(friendsList)).reduceByKey(lambda a, b: a + b)
 
