@@ -36,7 +36,7 @@ def recommendFriends(mutualFriends):
     thePerson = mutualFriends[0]
     recommendations = mutualFriends[1]
 
-    recommendations.sort(key=lambda recommendation: (-recommendation[1], recommendation[0]))
+    recommendations.sort(key=lambda recommendation: (-int(recommendation[1]), int(recommendation[0])))
 
     return (thePerson, [recommendation[0] for recommendation in recommendations[0:10]])
 
