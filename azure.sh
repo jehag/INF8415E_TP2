@@ -1,10 +1,12 @@
-### connect ###
+### connect to Azure VM ### (on local)
 # ssh -i C://Users//gh0st//Documents//8415//vm1_key.pem azureuser@20.55.2.103
 
+### install java ###
 sudo apt update
 sudo apt-get -y install default-jdk default-jre
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
+### install hadoop ###
 wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz
 tar -xvzf hadoop-3.3.1.tar.gz
 rm hadoop-3.3.1.tar.gz
@@ -12,12 +14,14 @@ sudo mv hadoop-3.3.1 /usr/local/hadoop
 export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:/usr/local/hadoop/sbin:/usr/local/hadoop/bin
 
+### fetch pg4300.txt ###
 hdfs dfs -mkdir input
 wget --header="Accept-encoding: *" -O pg4300.txt.gz https://www.gutenberg.org/cache/epub/4300/pg4300.txt
 gzip -d pg4300.txt.gz
 hdfs dfs -copyFromLocal pg4300.txt input
 rm pg4300.txt
 
+### run hadoop wordcount on pg4300.txt ###
 time hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount input output 
 hdfs dfs -rm -r output/
 
@@ -33,6 +37,7 @@ hdfs dfs -rm -r output/
 # user    0m8.474s
 # sys     0m0.286s
 
+### run linux wordcount on pg4300.txt ###
 time cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
 
 # real    0m0.724s
@@ -47,6 +52,7 @@ time cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
 # user    0m0.366s
 # sys     0m0.301s
 
+### install pyspark ###
 wget https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz
 tar -xvzf spark-3.3.1-bin-hadoop3.tgz
 rm spark-3.3.1-bin-hadoop3.tgz
@@ -75,8 +81,8 @@ if __name__ == "__main__":
         wordCounts.saveAsTextFile(sys.argv[2])
     else:
         print("Usage: {} <input> <output>".format(sys.argv[0]), file=sys.stderr)' > pyspark_wordcount.py
-### end of copy ###
 
+### run pyspark wordcount on pg4300.txt ###
 time spark-submit pyspark_wordcount.py input output
 hdfs dfs -rm -r output/
 
@@ -92,7 +98,7 @@ hdfs dfs -rm -r output/
 # user    0m15.189s
 # sys     0m0.635s
 
-### copy pyspark_wordcount.py ###
+### copy urls.txt ###
 echo 'https://tinyurl.com/4vxdw3pa
 https://tinyurl.com/kh9excea
 https://tinyurl.com/dybs9bnk
@@ -102,11 +108,12 @@ https://tinyurl.com/ym8s5fm4
 https://tinyurl.com/2h6a75nk
 https://tinyurl.com/vwvram8
 https://tinyurl.com/weh83uyn' > urls.txt
-### end of copy ###
 
+### fetch tinyurls ###
 hdfs dfs -mkdir all_input
 wget -P all_input -i urls.txt
 
+### run hadoop wordcount on tinyurls ###
 time hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount all_input all_output
 hdfs dfs -rm -r all_output/
 
@@ -122,6 +129,7 @@ hdfs dfs -rm -r all_output/
 # user    0m9.105s
 # sys     0m0.367s
 
+### run spark wordcount on tinyurls ###
 time spark-submit pyspark_wordcount.py all_input all_output
 hdfs dfs -rm -r all_output/
 
@@ -137,9 +145,10 @@ hdfs dfs -rm -r all_output/
 # user    0m18.411s
 # sys     0m0.797s
 
-### copy dataset for social network problem ###
-# scp -i C://Users//gh0st//Documents//8415//vm1_key.pem -r C://Users//gh0st//Documents//8415//TP2//soc-LiveJournal1Adj.txt azureuser@20.55.2.103:~
-
+### fetch friends lists ###
 hdfs dfs -mkdir recommendations_input
 mv soc-LiveJournal1Adj.txt recommendations_input/
+
+### run pyspark recommendations on friends lists ###
 time spark-submit pyspark_recommendations.py recommendations_input recommendations_output
+hdfs dfs -rm -r all_output/
