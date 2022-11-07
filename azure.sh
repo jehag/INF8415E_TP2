@@ -33,4 +33,16 @@ hdfs dfs -rm -r output/
 # user    0m8.474s
 # sys     0m0.286s
 
-cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
+time cat input/pg4300.txt | tr ' ' '\n' | sort | uniq -c ;
+
+# real    0m0.724s
+# user    0m0.367s
+# sys     0m0.311s
+
+# real    0m0.637s
+# user    0m0.383s
+# sys     0m0.272s
+
+# real    0m0.674s
+# user    0m0.366s
+# sys     0m0.301s
