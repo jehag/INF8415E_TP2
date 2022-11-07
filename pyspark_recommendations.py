@@ -14,6 +14,11 @@ def parseFriendsList(line):
         
     return friendList
 
+def expandFriends(friendsList):
+    allFriends = friendsList[1]
+    mutualFriends = [((friendA, friendB), 1) for i, friendA in enumerate(allFriends) for friendB in allFriends[i + 1:]]
+    return mutualFriends
+
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         # create Spark context with necessary configuration
@@ -22,7 +27,7 @@ if __name__ == "__main__":
         # read data from text file and split each line into a list
         friends = sc.textFile(sys.argv[1]).map(lambda line: parseFriendsList(line))  
 
-        connections = friends.flatMap(lambda friendsList: [((friendA, friendB), 1) for i, friendA in enumerate(friendsList[1]) for friendB in friendsList[1][i + 1:]]).reduceByKey(lambda a, b: a + b)
+        connections = friends.flatMap(lambda friendsList: expandFriends(friendsList)).reduceByKey(lambda a, b: a + b)
 
         connections.saveAsTextFile(sys.argv[2])
 
