@@ -11,3 +11,9 @@ rm hadoop-3.3.1.tar.gz
 sudo mv hadoop-3.3.1 /usr/local/hadoop
 export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:/usr/local/hadoop/sbin:/usr/local/hadoop/bin
+
+hdfs dfs -mkdir input
+hdfs dfs -copyFromLocal pg4300.txt input
+
+hadoop jar hadoop-0.19.2-examples.jar wordcount input output 
+
