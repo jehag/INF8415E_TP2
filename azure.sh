@@ -7,6 +7,7 @@ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
 wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz
 tar -xvzf hadoop-3.3.1.tar.gz
+rm hadoop-3.3.1.tar.gz
 sudo mv hadoop-3.3.1 /usr/local/hadoop
 export HADOOP_HOME=/usr/local/hadoop
 export PATH=$PATH:/usr/local/hadoop/sbin:/usr/local/hadoop/bin
